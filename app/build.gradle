@@ -50,7 +50,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.10'
+        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
@@ -84,6 +84,7 @@ dependencies {
 
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
 
     // Retrofit
     def retrofit_version = "2.9.0"
@@ -93,11 +94,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 
     //Koin
-    def koin_version = "3.0.2"
+    def koin_version = '3.1.2'
     implementation "io.insert-koin:koin-android:$koin_version"
 
     // Room
-    def room_version = "2.2.5"
+    def room_version = '2.3.0'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
@@ -117,7 +118,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
 
     //Datastore Preferences
-    implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     // Coil
     implementation 'io.coil-kt:coil-compose:1.4.0'
@@ -125,7 +126,9 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
-
+    // WorkManager
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // Testing
     testImplementation 'junit:junit:4.+'
