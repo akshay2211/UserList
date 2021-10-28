@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">UserList</string>
+    <string name="heading">User list</string>
+    <string name="subtitle">"List of all the users"</string>
+    <string name="settings_title">Settings</string>
+    <string name="placeholder_image_desc">"Placeholder Image"</string>
+    <string name="loading">Loading..</string>
+    <string name="cache_summary" translatable="false">Clear all stored values in local database</string>
+    <string name="cache_title" translatable="false">Clear Storage</string>
+    <string name="system_call_error">Error occurred during system call</string>
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="image_desc">generic image</string>
+    <string name="no_bookmarks">No Bookmarks</string>
+    <string name="add_bookmarks">Your bookmarks will appear here</string>
+    <string name="light_mode_selected">Light mode is Selected</string>
+    <string name="dark_mode_selected">Dark mode is Selected</string>
+    <string name="default_theme">Default theme is Selected</string>
+    <string name="custom_theme">Custom theme is Selected</string>
+    <string name="storage_cleared">Local storage cleared</string>
+    <string name="navigate_back">navigate back</string>
 </resources>
