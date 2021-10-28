@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.ak1.userlist.ui.screens.Destinations
 import io.ak1.userlist.ui.screens.HomeScreenComposable
+import io.ak1.userlist.ui.screens.SettingsScreen
 import io.ak1.userlist.ui.screens.UserViewModel
 import io.ak1.userlist.ui.theme.UserListTheme
 
@@ -32,6 +33,9 @@ fun RootComposable(liveViewModel: UserViewModel, window: Window) {
             ) {
                 composable(Destinations.HOME_ROUTE) {
                     HomeScreenComposable(liveViewModel, navController)
+                }
+                composable(Destinations.SETTINGS_ROUTE) {
+                    SettingsScreen(navController)
                 }
             }
         }

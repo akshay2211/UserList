@@ -13,13 +13,14 @@ interface ApiList {
 
     //https://reqres.in/api/users?page=1&delay=3
 
-    @GET("users?delay=3")
+    @GET("$END_POINT?delay=3")
     suspend fun getUserList(
-        @Query("page") page: Int = 1,
+        @Query("page") page: String = "1",
         @Query("per_page") per_page: Int = 3
     ): Response<BaseData>
 
     companion object {
         const val BASE_PATH = "https://reqres.in/api/"
+        const val END_POINT = "users"
     }
 }

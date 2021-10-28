@@ -29,3 +29,7 @@ data class User(
     @SerializedName("total_page")
     var totalPage: Int = 0
 }
+
+@Parcelize
+@Entity(tableName = "remote_keys")
+data class RemoteKey(@PrimaryKey val label: String, val nextKey: String?) : Parcelable

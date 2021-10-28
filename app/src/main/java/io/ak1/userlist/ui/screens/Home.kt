@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -28,8 +26,11 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import io.ak1.userlist.R
 import io.ak1.userlist.models.User
+import io.ak1.userlist.ui.components.PlaceHolder
+import io.ak1.userlist.ui.components.ShimmerPlaceholder
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -42,11 +43,11 @@ fun HomeScreenComposable(
     userViewModel: UserViewModel,
     navController: NavController
 ) {
-    UserList(users = userViewModel.users)
+    UserList(users = userViewModel.users, navController)
 }
 
 @Composable
-fun UserList(users: Flow<PagingData<User>>) {
+fun UserList(users: Flow<PagingData<User>>, navController: NavController) {
     val lazyUserItems = users.collectAsLazyPagingItems()
     LazyColumn {
         item {
@@ -69,7 +70,9 @@ fun UserList(users: Flow<PagingData<User>>) {
                         modifier = Modifier
                             .size(48.dp)
                             .padding(12.dp)
-                            .clickable { }
+                            .clickable {
+                                navController.navigate(Destinations.SETTINGS_ROUTE)
+                            }
                     )
                 }
                 Spacer(
@@ -116,10 +119,15 @@ fun UserList(users: Flow<PagingData<User>>) {
         lazyUserItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
+                    item {
+                        PlaceHolder(
+                            imageId = R.drawable.ic_undraw_loading,
+                            descriptionId = R.string.loading
+                        )
+                    }
                 }
                 loadState.append is LoadState.Loading -> {
-                    item { LoadingItem() }
+                    item { ShimmerPlaceholder() }
                 }
                 loadState.refresh is LoadState.Error -> {
                     val e = lazyUserItems.loadState.refresh as LoadState.Error
@@ -147,6 +155,7 @@ fun UserList(users: Flow<PagingData<User>>) {
 
 @Composable
 fun UserItem(user: User) {
+
     Row(
         modifier = Modifier
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)
@@ -159,19 +168,19 @@ fun UserItem(user: User) {
             painter = rememberImagePainter(
                 data = user.avatar,
                 builder = {
-                    crossfade(true)
+                    transformations(CircleCropTransformation())
                 }
             ),
             contentDescription = "avatar Image",
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
                 .size(100.dp)
-                .clip(CircleShape)
                 .padding(16.dp)
         )
+
         Column(
             modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                .padding(start = 16.dp, end = 16.dp)
                 .weight(1f, fill = true),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -190,31 +199,13 @@ fun UserItem(user: User) {
             )
         }
     }
+    /* Divider(modifier = Modifier
+         .height(0.5.dp)
+         .fillMaxWidth()
+         .background(colorResource(id = android.R.color.darker_gray)))*/
 }
 
 
-@Composable
-fun LoadingView(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun LoadingItem() {
-    CircularProgressIndicator(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .wrapContentWidth(Alignment.CenterHorizontally)
-    )
-}
 
 @Composable
 fun ErrorItem(
