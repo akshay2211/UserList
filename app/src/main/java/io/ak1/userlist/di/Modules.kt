@@ -1,6 +1,9 @@
 package io.ak1.userlist.di
 
+import io.ak1.userlist.data.repository.UserRepository
+import io.ak1.userlist.ui.screens.UserViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**
@@ -24,7 +27,9 @@ var databaseModule = module {
 
 var repoModule = module {
     single { getCoroutineContext() }
+    single { UserRepository(get(), get()) }
 }
 
 var viewModelModule = module {
+    viewModel { UserViewModel(get()) }
 }

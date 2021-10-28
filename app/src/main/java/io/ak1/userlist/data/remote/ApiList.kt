@@ -11,6 +11,8 @@ import retrofit2.http.Query
  */
 interface ApiList {
 
+    //https://reqres.in/api/users?page=1&delay=3
+
     @GET("users?delay=3")
     suspend fun getUserList(
         @Query("page") page: Int = 1,

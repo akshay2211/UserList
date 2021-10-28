@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UserList</string>
+    <string name="heading">User list</string>
+    <string name="subtitle">"List of all the users"</string>
 </resources>

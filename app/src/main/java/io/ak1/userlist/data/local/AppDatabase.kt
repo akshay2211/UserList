@@ -1,6 +1,6 @@
 package io.ak1.userlist.data.local
 
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.*
 import io.ak1.userlist.models.User
 
@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user_table ORDER BY id ASC")
-    fun getUserList(): DataSource.Factory<Int, User>
+    fun getUserList(): PagingSource<Int, User>
 
     @Query("SELECT * FROM user_table ORDER BY id ASC")
     fun getUserListSimple(): List<User>
