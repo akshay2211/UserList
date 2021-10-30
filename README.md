@@ -1,4 +1,4 @@
-# UserList
+# UserList (work-in-progress)
 Android Application sample in Compose demostrating the power of Paging3 with Single Source of Truth Concept.
 
 Screenshots
