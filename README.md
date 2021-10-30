@@ -3,7 +3,7 @@ Android Application sample in Compose demostrating the power of Paging3 with Sin
 
 Screenshots
 -----------
-<img src="media/light.png" width="25%"/><img src="media/dark.png" width="25%"/>
+<img src="media/media.gif" width="21%"/><img width="5%"/> <img src="media/light.png" width="25%"/><img src="media/dark.png" width="25%"/>
 
 
 License
