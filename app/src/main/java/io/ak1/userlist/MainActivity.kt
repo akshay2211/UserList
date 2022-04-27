@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import io.ak1.userlist.ui.components.RootComposable
 import io.ak1.userlist.ui.screens.UserViewModel
 import io.ak1.userlist.ui.theme.UserListTheme
@@ -15,9 +16,9 @@ class MainActivity : ComponentActivity() {
     private val liveViewModel by inject<UserViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            RootComposable(liveViewModel = liveViewModel, window = window)
+            RootComposable(liveViewModel = liveViewModel)
         }
     }
 }

@@ -2,13 +2,9 @@ package io.ak1.userlist.ui.components
 
 import android.content.Context
 import android.content.res.Configuration
-import android.view.Window
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -37,7 +33,6 @@ fun Context.isDarkThemeOn() = dataStore.data
 
 @Composable
 fun isSystemInDarkThemeCustom(): Boolean {
-
     val context = LocalContext.current
     val prefs = runBlocking { context.dataStore.data.first() }
     return when (context.isDarkThemeOn()
@@ -46,11 +41,4 @@ fun isSystemInDarkThemeCustom(): Boolean {
         1 -> false
         else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
-}
-
-@Composable
-fun Window.StatusBarConfig(darkTheme: Boolean) {
-    WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
-        !darkTheme
-    this.statusBarColor = MaterialTheme.colors.primary.toArgb()
 }
