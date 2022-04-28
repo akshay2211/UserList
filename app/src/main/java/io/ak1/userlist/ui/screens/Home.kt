@@ -43,7 +43,7 @@ fun HomeScreenComposable(
     userViewModel: UserViewModel,
     navController: NavController
 ) {
-    UserList(users = userViewModel.users, navController)
+    UserList(users = userViewModel.getAllUsers, navController)
 }
 
 @Composable
@@ -112,8 +112,10 @@ fun UserList(users: Flow<PagingData<User>>, navController: NavController) {
         }
 
 
-        items(lazyUserItems) { User ->
-            UserItem(user = User!!)
+        items(lazyUserItems) { user ->
+            user?.let {
+                UserItem(user = it)
+            }
         }
 
         lazyUserItems.apply {

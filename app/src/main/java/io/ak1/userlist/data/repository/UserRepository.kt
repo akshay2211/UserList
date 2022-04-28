@@ -8,6 +8,7 @@ import io.ak1.userlist.data.remote.ApiList
 import io.ak1.userlist.models.BaseData
 import io.ak1.userlist.models.RemoteKey
 import io.ak1.userlist.models.User
+import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -53,7 +54,7 @@ class ExampleRemoteMediator(
             val loadKey = when (loadType) {
                 LoadType.REFRESH -> {
                     // val remoteKey = repository.getKey()
-
+                    repository.deleteAll()
                     Log.e("load", "LoadType.REFRESH")
                     null
                 }
@@ -110,12 +111,31 @@ class ExampleRemoteMediator(
 
 
 class UserRepository(private val appDatabase: AppDatabase, private val apiList: ApiList) {
+
+    @ExperimentalPagingApi
+    fun getAllUsers(): Flow<PagingData<User>> {
+        val pagingSourceFactory = { appDatabase.userDao().getUserList() }
+
+        return Pager(
+            config = PagingConfig(pageSize = 3),
+            remoteMediator = ExampleRemoteMediator(
+                this
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
+
     private val userDao = appDatabase.userDao()
     private val remoteKeyDao = appDatabase.remoteKeyDao()
     suspend fun getKey(): Int {
         return appDatabase.withTransaction {
             userDao.getNextPage()
         }
+    }
+
+    suspend fun deleteAll() = appDatabase.withTransaction {
+        userDao.deleteTable()
+        remoteKeyDao.deleteByQuery()
     }
 
     suspend fun getUsers(page: String) = apiList.getUserList(page = page)
@@ -149,7 +169,7 @@ class UserRepository(private val appDatabase: AppDatabase, private val apiList: 
 
     @OptIn(ExperimentalPagingApi::class)
     val pager = Pager(
-        config = PagingConfig(pageSize = 50),
+        config = PagingConfig(pageSize = 5),
         remoteMediator = ExampleRemoteMediator(this)
     ) {
         userDao.getUserList()
